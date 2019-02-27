@@ -15,21 +15,7 @@ public class Maze{
       3. When the file is not found OR the file is invalid (not exactly 1 E and 1 S) then:
          throw a FileNotFoundException or IllegalStateException
     */
-public class Driver{
-    public static void main(String[]args){
-      String filename = "data1.dat";
-      try{
-        Maze f;
-        f = new Maze(filename);//true animates the maze.
 
-        f.setAnimate(true);
-        f.solve();
-        System.out.println(f);
-      }catch(FileNotFoundException e){
-        System.out.println("Invalid filename: "+filename);
-      }
-    }
-}
     public Maze(String filename) throws FileNotFoundException{
         //COMPLETE CONSTRUCTOR
         File text = new File(filename);
@@ -90,7 +76,7 @@ public class Driver{
             //and start solving at the location of the s.
 
             //return solve(???,???);
-
+            return -1;
     }
 
     /*
