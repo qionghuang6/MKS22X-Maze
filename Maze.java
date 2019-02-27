@@ -38,21 +38,7 @@ public class Driver{
         int cols = 0;
         while(s.hasNextLine()){
               String line = s.nextLine();
-              cols = line.length();public class Driver{
-    public static void main(String[]args){
-      String filename = "data1.dat";
-      try{
-        Maze f;
-        f = new Maze(filename);//true animates the maze.
-
-        f.setAnimate(true);
-        f.solve();
-        System.out.println(f);
-      }catch(FileNotFoundException e){
-        System.out.println("Invalid filename: "+filename);
-      }
-    }
-}
+              cols = line.length();
               rows++;
           }
         maze = new char[rows][cols];
@@ -124,7 +110,7 @@ public class Driver{
 
         All visited spots that are part of the solution are changed to '@'
     */
-    
+
     private int solve(int row, int col){ //you can add more parameters since this is private
 
 
