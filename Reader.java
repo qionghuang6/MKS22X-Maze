@@ -20,8 +20,8 @@ public class Reader{
       String t = s.nextLine();
       for (int i = 0; i < cols ;i++ ) {
         maze[line][i] = t.charAt(i);
-        line++;
       }
+      line++;
     }
     for (char[] row: maze) {
       for (char c: row) {
