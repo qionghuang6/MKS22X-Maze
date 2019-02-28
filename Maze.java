@@ -3,7 +3,7 @@ import java.io.*;
 public class Maze{
     private char[][]maze;
     private boolean animate;//false by default
-
+    private static final int[][] DIRECTIONS = {{1,0},{0,1},{-1,0},{0-1}};
     /*Constructor loads a maze text file, and sets animate to false by default.
 
       1. The file contains a rectangular ascii maze, made with the following 4 characters:
@@ -37,7 +37,7 @@ public class Maze{
           }
           line++;
         }
-        int sCount = 0;
+        int sCount = 0;        maze[row][col] = '.';
         int eCount = 0;
         for (char[] a :maze) {
           for (char b : a) {
@@ -90,7 +90,7 @@ public class Maze{
 
       Note the helper function has the same name, but different parameters.
       Since the constructor exits when the file is not found or is missing an E or S, we can assume it exists.
-
+ing at the location of th
     */
     public int solve(){
             int row = 0;
@@ -98,7 +98,7 @@ public class Maze{
             //find the location of the S.
             for(int r = 0; r < maze.length; r++){
               for(int c = 0; c < maze.length; c++){
-                if(maze[r][c] = 'S'){
+                if(maze[r][c] == 'S'){
                   row = r;
                   col = c;
                   break;
@@ -109,7 +109,7 @@ public class Maze{
             maze[row][col] = ' ';
             //and start solving at the location of the s.
             //return solve(???,???);
-            return -1;
+            return solve(row,col,1);
     }
 
     /*
@@ -121,17 +121,16 @@ public class Maze{
       Returns -1 when the maze has no solution.
 
 
-      Postcondition:
+      Postcondition:ing at the location of th
 
         The S is replaced with '@' but the 'E' is not.
 
         All visited spots that were not part of the solution are changed to '.'
-
+solve(row + d[0], col + d[1], count + 1);
         All visited spots that are part of the solution are changed to '@'
     */
 
-    private int solve(int row, int col){ //you can add more parameters since this is private
-
+    private int solve(int row, int col, int count){ //you can add more parameters since this is private
 
         //automatic animation! You are welcome.
         if(animate){
@@ -139,10 +138,24 @@ public class Maze{
             clearTerminal();
             System.out.println(this);
 
-            wait(20);
+            wait(200);
         }
 
         //COMPLETE SOLVE
+        if(maze[row][col] == 'E'){
+          return count;
+        }
+
+        for (int[] d : DIRECTIONS) {
+          try {
+            if(maze[row + d[0]][col + d[1]] == ' ' || maze[row + d[0]][col + d[1]] == 'E'){
+                maze[row][col] = '@';
+                solve(row + d[0], col + d[1], count + 1);
+            }
+          } catch(ArrayIndexOutOfBoundsException e) {
+          }
+        }
+        maze[row][col] = '.';
 
         return -1; //so it compiles
     }
