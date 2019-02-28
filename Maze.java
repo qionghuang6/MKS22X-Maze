@@ -37,8 +37,33 @@ public class Maze{
           }
           line++;
         }
+        int sCount = 0;
+        int eCount = 0;
+        for (char[] a :maze) {
+          for (char b : a) {
+            if(b == 'E'){
+              eCount++;
+            }
+            if(b == 'S'){
+              sCount++;
+            }
+          }
+        }
+        if(sCount > 1 || eCount > 1){
+          throw new IllegalStateException();
+        }
+        setAnimate(false);
     }
-
+    public String toString(){
+      String s = "";
+      for (char[] a :maze) {
+        for (char b : a) {
+          s += b;
+        }
+        s += "\n";
+      }
+      return s;
+    }
     private void wait(int millis){
          try {
              Thread.sleep(millis);
