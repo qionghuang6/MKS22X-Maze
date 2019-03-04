@@ -5,6 +5,7 @@ public class Maze{
     private boolean animate;//false by default
     private static final int[][] DIRECTIONS = {{1,0},{0,1},{-1,0},{0,-1}};
     private int count;
+    private boolean found;
     /*Constructor loads a maze text file, and sets animate to false by default.
 
       1. The file contains a rectangular ascii maze, made with the following 4 characters:
@@ -20,6 +21,7 @@ public class Maze{
     public Maze(String filename) throws FileNotFoundException{
         //COMPLETE CONSTRUCTOR
         count = 0;
+        found = false;
         File text = new File(filename);
         Scanner s = new Scanner(text);
         int rows = 0;
@@ -139,26 +141,31 @@ solve(row + d[0], col + d[1], count + 1);
 
             clearTerminal();
             System.out.println(this);
-
-            wait(100);
+            wait(50);
         }
-
-        //COMPLETE SOLVE
-        if(maze[row][col] == 'E'){
-          count = tempSteps;
-          return count;
-        }
-        maze[row][col] = '@';
-        for (int[] d: DIRECTIONS) {
-          if(row + d[0] >= 0 && row + d[0] < maze.length &&
-              col + d[1] >= 0 && col + d[1] < maze[0].length && maze[row + d[0]][col + d[1]] == ' '
-              || maze[row + d[0]][col + d[1]] == 'E'){
-                solve(row + d[0], col + d[1], tempSteps + 1);
-              }
-        }
-        if(count == 0){
-          maze[row][col] = '.';
-        }
-        return -1; //so it compiles
+          //COMPLETE SOLVE
+          if(maze[row][col] == 'E'){
+            count = tempSteps;
+            return count;
+          }
+          maze[row][col] = '@';
+          for (int[] d: DIRECTIONS) {
+            System.out.println(" " + (row + d[0]) + " " + (col + d[1]));
+            if(row + d[0] >= 0 && row + d[0] < maze.length &&
+                col + d[1] >= 0 && col + d[1] < maze[0].length && (maze[row + d[0]][col + d[1]] == ' '
+                || maze[row + d[0]][col + d[1]] == 'E')){
+                  if(maze[row + d[0]][col + d[1]] == 'E'){
+                    count = tempSteps;
+                    found = true;
+                  }
+                  if(!found){
+                      solve(row + d[0], col + d[1], tempSteps + 1);
+                  }
+                }
+          }
+            if(!found){
+                maze[row][col] = '.';
+            }
+        return count; //so it compiles
     }
 }
