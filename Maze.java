@@ -141,7 +141,7 @@ solve(row + d[0], col + d[1], count + 1);
 
             clearTerminal();
             System.out.println(this);
-            wait(50);
+            wait(10);
         }
           //COMPLETE SOLVE
           if(maze[row][col] == 'E'){
@@ -150,7 +150,7 @@ solve(row + d[0], col + d[1], count + 1);
           }
           maze[row][col] = '@';
           for (int[] d: DIRECTIONS) {
-            System.out.println(" " + (row + d[0]) + " " + (col + d[1]));
+            //System.out.println(" " + (row + d[0]) + " " + (col + d[1]));
             if(row + d[0] >= 0 && row + d[0] < maze.length &&
                 col + d[1] >= 0 && col + d[1] < maze[0].length && (maze[row + d[0]][col + d[1]] == ' '
                 || maze[row + d[0]][col + d[1]] == 'E')){
