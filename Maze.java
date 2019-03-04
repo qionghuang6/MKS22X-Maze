@@ -3,7 +3,8 @@ import java.io.*;
 public class Maze{
     private char[][]maze;
     private boolean animate;//false by default
-    private static final int[][] DIRECTIONS = {{1,0},{0,1},{-1,0},{0-1}};
+    private static final int[][] DIRECTIONS = {{1,0},{0,1},{-1,0},{0,-1}};
+    private int count;
     /*Constructor loads a maze text file, and sets animate to false by default.
 
       1. The file contains a rectangular ascii maze, made with the following 4 characters:
@@ -18,6 +19,7 @@ public class Maze{
 
     public Maze(String filename) throws FileNotFoundException{
         //COMPLETE CONSTRUCTOR
+        count = 0;
         File text = new File(filename);
         Scanner s = new Scanner(text);
         int rows = 0;
@@ -37,7 +39,7 @@ public class Maze{
           }
           line++;
         }
-        int sCount = 0;        maze[row][col] = '.';
+        int sCount = 0;
         int eCount = 0;
         for (char[] a :maze) {
           for (char b : a) {
@@ -130,7 +132,7 @@ solve(row + d[0], col + d[1], count + 1);
         All visited spots that are part of the solution are changed to '@'
     */
 
-    private int solve(int row, int col, int count){ //you can add more parameters since this is private
+    private int solve(int row, int col,int tempSteps){ //you can add more parameters since this is private
 
         //automatic animation! You are welcome.
         if(animate){
@@ -138,25 +140,25 @@ solve(row + d[0], col + d[1], count + 1);
             clearTerminal();
             System.out.println(this);
 
-            wait(200);
+            wait(100);
         }
 
         //COMPLETE SOLVE
         if(maze[row][col] == 'E'){
+          count = tempSteps;
           return count;
         }
-
-        for (int[] d : DIRECTIONS) {
-          try {
-            if(maze[row + d[0]][col + d[1]] == ' ' || maze[row + d[0]][col + d[1]] == 'E'){
-                maze[row][col] = '@';
-                solve(row + d[0], col + d[1], count + 1);
-            }
-          } catch(ArrayIndexOutOfBoundsException e) {
-          }
+        maze[row][col] = '@';
+        for (int[] d: DIRECTIONS) {
+          if(row + d[0] >= 0 && row + d[0] < maze.length &&
+              col + d[1] >= 0 && col + d[1] < maze[0].length && maze[row + d[0]][col + d[1]] == ' '
+              || maze[row + d[0]][col + d[1]] == 'E'){
+                solve(row + d[0], col + d[1], tempSteps + 1);
+              }
         }
-        maze[row][col] = '.';
-
+        if(count == 0){
+          maze[row][col] = '.';
+        }
         return -1; //so it compiles
     }
 }
