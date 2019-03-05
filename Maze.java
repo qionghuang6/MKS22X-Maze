@@ -20,7 +20,7 @@ public class Maze{
 
     public Maze(String filename) throws FileNotFoundException{
         //COMPLETE CONSTRUCTOR
-        count = 0;
+        count = -1;
         found = false;
         File text = new File(filename);
         Scanner s = new Scanner(text);
@@ -141,7 +141,7 @@ solve(row + d[0], col + d[1], count + 1);
 
             clearTerminal();
             System.out.println(this);
-            wait(10);
+            wait(1);
         }
           //COMPLETE SOLVE
           if(maze[row][col] == 'E'){
